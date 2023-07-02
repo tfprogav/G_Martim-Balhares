@@ -280,6 +280,5 @@ def criar_interface():
 
     root.mainloop()
 
-
 # Iniciar a interface
 criar_interface()
