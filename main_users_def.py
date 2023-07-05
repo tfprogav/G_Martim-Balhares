@@ -10,7 +10,6 @@ conexao = mysql.connector.connect(
     database="tf_prog_av"
 )
 
-
 def buscar_registros():
     # Criar um cursor para executar comandos SQL
     cursor = conexao.cursor()
@@ -97,53 +96,67 @@ def criar_utilizador():
         # Fechar o cursor
         cursor.close()
 
-        # Fechar a janela de criação de utilizador
-        janela_criar.destroy()
-
         # Atualizar a exibição dos registros
         buscar_registros()
 
-    # Criar uma nova janela para preencher os dados do novo utilizador
-    janela_criar = tk.Toplevel(root)
-    janela_criar.title("Criar Utilizador")
+        # Fechar a janela de criação de utilizador
+        janela_utilizador.destroy()
 
-    # Criar os campos e os rótulos para inserção dos dados
-    tk.Label(janela_criar, text="Nome:").grid(row=0, column=0)
-    entry_nome = tk.Entry(janela_criar)
-    entry_nome.grid(row=0, column=1)
+    # Criar a janela para criação de utilizador
+    janela_utilizador = tk.Toplevel()
+    janela_utilizador.title("Criar Utilizador")
 
-    tk.Label(janela_criar, text="Email:").grid(row=1, column=0)
-    entry_email = tk.Entry(janela_criar)
-    entry_email.grid(row=1, column=1)
+    label_nome = ttk.Label(janela_utilizador, text="Nome:")
+    entry_nome = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Contacto:").grid(row=2, column=0)
-    entry_contacto = tk.Entry(janela_criar)
-    entry_contacto.grid(row=2, column=1)
+    label_email = ttk.Label(janela_utilizador, text="Email:")
+    entry_email = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Morada:").grid(row=3, column=0)
-    entry_morada = tk.Entry(janela_criar)
-    entry_morada.grid(row=3, column=1)
+    label_contacto = ttk.Label(janela_utilizador, text="Contacto:")
+    entry_contacto = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Localidade:").grid(row=4, column=0)
-    entry_localidade = tk.Entry(janela_criar)
-    entry_localidade.grid(row=4, column=1)
+    label_morada = ttk.Label(janela_utilizador, text="Morada:")
+    entry_morada = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Nascimento:").grid(row=5, column=0)
-    entry_nascimento = tk.Entry(janela_criar)
-    entry_nascimento.grid(row=5, column=1)
+    label_localidade = ttk.Label(janela_utilizador, text="Localidade:")
+    entry_localidade = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Senha:").grid(row=6, column=0)
-    entry_senha = tk.Entry(janela_criar)
-    entry_senha.grid(row=6, column=1)
+    label_nascimento = ttk.Label(janela_utilizador, text="Nascimento:")
+    entry_nascimento = ttk.Entry(janela_utilizador)
 
-    tk.Label(janela_criar, text="Perfil:").grid(row=7, column=0)
-    entry_perfil = tk.Entry(janela_criar)
-    entry_perfil.grid(row=7, column=1)
+    label_senha = ttk.Label(janela_utilizador, text="Senha:")
+    entry_senha = ttk.Entry(janela_utilizador)
 
-    # Criar o botão de salvar
-    btn_salvar = tk.Button(janela_criar, text="Salvar", command=salvar_utilizador)
-    btn_salvar.grid(row=8, column=0, columnspan=2)
+    label_perfil = ttk.Label(janela_utilizador, text="Perfil:")
+    entry_perfil = ttk.Entry(janela_utilizador)
 
+    btn_salvar = ttk.Button(janela_utilizador, text="Salvar", command=salvar_utilizador)
+
+    label_nome.pack(padx=5, pady=5)
+    entry_nome.pack(padx=5, pady=5)
+
+    label_email.pack(padx=5, pady=5)
+    entry_email.pack(padx=5, pady=5)
+
+    label_contacto.pack(padx=5, pady=5)
+    entry_contacto.pack(padx=5, pady=5)
+
+    label_morada.pack(padx=5, pady=5)
+    entry_morada.pack(padx=5, pady=5)
+
+    label_localidade.pack(padx=5, pady=5)
+    entry_localidade.pack(padx=5, pady=5)
+
+    label_nascimento.pack(padx=5, pady=5)
+    entry_nascimento.pack(padx=5, pady=5)
+
+    label_senha.pack(padx=5, pady=5)
+    entry_senha.pack(padx=5, pady=5)
+
+    label_perfil.pack(padx=5, pady=5)
+    entry_perfil.pack(padx=5, pady=5)
+
+    btn_salvar.pack(padx=5, pady=10)
 
 def alterar_utilizador():
     # Obter o utilizador selecionado na tabela
@@ -190,7 +203,7 @@ def alterar_utilizador():
             buscar_registros()
 
         # Criar uma nova janela para editar os dados do utilizador
-        janela_alterar = tk.Toplevel(root)
+        janela_alterar = tk.Toplevel()
         janela_alterar.title("Alterar Utilizador")
 
         # Preencher os campos de entrada com os dados atuais do utilizador
@@ -243,42 +256,47 @@ def alterar_utilizador():
 
 
 def criar_interface(content_frame):
-    global root, table
+    global table, frame
 
-    # root = tk.Tk()
-    # root.title("Utilizadores")
+    for widget in content_frame.winfo_children():
+        widget.destroy()
 
     frame = ttk.Frame(content_frame, padding="10")
-    frame.grid()
+    frame.pack()
 
-    # Criar a tabela para exibir os registros
-    columns = ("Nome", "Email", "Contacto", "Morada", "Localidade", "Nascimento", "Senha", "Perfil")
-    table = ttk.Treeview(frame, columns=columns, show="headings")
-    table.grid(row=0, column=0, columnspan=3, pady=10)
+    table = ttk.Treeview(frame, columns=("ID", "Nome", "Email", "Contacto", "Morada", "Localidade", "Nascimento","Password", "Perfil"), show="headings")
 
-    # Adicionar os cabeçalhos da tabela
-    for col in columns:
-        table.heading(col, text=col)
+    table.column("ID", width=50)
+    table.column("Nome", width=150)
+    table.column("Email", width=150)
+    table.column("Contacto", width=100)
+    table.column("Morada", width=150)
+    table.column("Localidade", width=100)
+    table.column("Nascimento", width=100)
+    table.column("Perfil", width=100)
 
-    # Criar os botões
-    btn_atualizar = ttk.Button(frame, text="Atualizar", command=alterar_utilizador)
-    btn_atualizar.grid(row=1, column=0, padx=5, pady=5)
+    table.heading("ID", text="ID")
+    table.heading("Nome", text="Nome")
+    table.heading("Email", text="Email")
+    table.heading("Contacto", text="Contacto")
+    table.heading("Morada", text="Morada")
+    table.heading("Localidade", text="Localidade")
+    table.heading("Nascimento", text="Nascimento")
+    table.heading("Password", text="Password")
+    table.heading("Perfil", text="Perfil")
 
-    btn_apagar = ttk.Button(frame, text="Apagar", command=apagar_utilizador)
-    btn_apagar.grid(row=1, column=1, padx=5, pady=5)
+    scroll = ttk.Scrollbar(frame, orient="vertical", command=table.yview)
+    table.configure(yscroll=scroll.set)
 
-    btn_criar = ttk.Button(frame, text="Criar", command=criar_utilizador)
-    btn_criar.grid(row=1, column=2, padx=5, pady=5)
+    btn_atualizar = ttk.Button(content_frame, text="Atualizar", command=alterar_utilizador)
+    btn_apagar = ttk.Button(content_frame, text="Apagar", command=apagar_utilizador)
+    btn_criar = ttk.Button(content_frame, text="Criar", command=criar_utilizador)
 
-    # Definir o redimensionamento das colunas da tabela
-    # frame.grid_columnconfigure(0, weight=1)
-    # frame.grid_columnconfigure(1, weight=1)
-    # frame.grid_columnconfigure(2, weight=1)
+    btn_atualizar.pack(pady=5)
+    btn_apagar.pack(pady=5)
+    btn_criar.pack(pady=5)
 
-    # Inicializar a exibição dos registros
+    table.pack(side="left")
+    scroll.pack(side="right", fill="y")
+
     buscar_registros()
-
-    #root.mainloop()
-
-# Iniciar a interface
-criar_interface(content_frame)
