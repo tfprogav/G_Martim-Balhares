@@ -3,6 +3,8 @@ from tkinter import ttk
 
 import main_users_def
 
+# Definição de funções que limpam o content_frame (chamando a função clear_content_frame())
+# e criam um rótulo com os nomes respetivos. O rótulo é adicionado ao content_frame
 def show_gestao_utilizadores():
     clear_content_frame()
     label = Label(content_frame, text='Informações de Gestão de Utilizadores', font=('Arial', 14))
@@ -37,22 +39,31 @@ def clear_content_frame():
     for widget in content_frame.winfo_children():
         widget.destroy()
 
-root = Tk()
-root.title('Centro de formação')
-root.geometry('1280x640+280+150')
-root.resizable(0, 0)
+# Definir a aparência inicial da janela principal
+root = Tk() # Cria uma instância da classe
+root.title('Centro de formação') # Título da janela
+root.geometry('1280x640+280+150') # Geometria da janela, especifica a largura, altura e posição inicial
+root.resizable(0, 0) # Bloquea a capacidade de alterar o tamanho em largura e altura
 
+# Define a fonte das letras exibidas na interface
 FONT = ('Arial', 12)
 
+# Cria um frame dentro da janela raiz, define a sua altura, largura, cor de fundo
+# Empacota o frame no local padrão e expande para ocupar o espaço disponível
 main_frame = Frame(root, width=1280, height=720, bg='#F5F5F5')
 main_frame.pack(fill='both', expand=True)
 
+# Cria um frame dentro do main_frame, define a sua altura, largura, cor de fundo
+# Empacota o frame à esquerda e preenche verticalmente o espaço disponível
 menu_frame = Frame(main_frame, bg='#383838', width=200, height=720)
 menu_frame.pack(side='left', fill='y')
 
+# Cria um frame dentro do content_frame, define a sua altura, largura, cor de fundo
+# Empacota o frame à esquerda e expande para ocupar o espaço disponível
 content_frame = Frame(main_frame, bg='white', width=1080, height=720)
 content_frame.pack(side='left', fill='both', expand=True)
 
+# Define um dicionário para o estilo dos botões
 button_styles = {
     'bg': '#008080',
     'fg': 'white',
@@ -65,6 +76,11 @@ button_styles = {
     'cursor': 'hand2',
 }
 
+# Define vários botões a partir do dicionário button_styles
+# Empacota-os com preenchimento vertical (pady=10) preenchimento horizontal (padx=20) e preenchimento horizontal completo (fill='x').
+
+# O primeiro botão (button1) em particular Define a função main_users_def.criar_interface(content_frame)
+# como o comando a ser executado quando o botão é clicado.
 button1 = Button(menu_frame, text='Gestão de Utilizadores', **button_styles, command=lambda: main_users_def.criar_interface(content_frame))
 button1.pack(pady=10, padx=20, fill='x')
 
@@ -83,4 +99,5 @@ button5.pack(pady=10, padx=20, fill='x')
 button6 = Button(menu_frame, text='Performance de Alunos', **button_styles)
 button6.pack(pady=10, padx=20, fill='x')
 
+# Inicia a loop do programa e exibe a janela
 root.mainloop()

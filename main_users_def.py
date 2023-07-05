@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 import mysql.connector
 from tkinter import messagebox
 
+# Estabelecer uma conexão com o banco de dados MySQL
 conexao = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
@@ -10,6 +11,7 @@ conexao = mysql.connector.connect(
     database="tf_prog_av"
 )
 
+# Buscar registros da tabela "q_utilizadores"
 def buscar_registros():
     # Criar um cursor para executar comandos SQL
     cursor = conexao.cursor()
@@ -31,7 +33,7 @@ def buscar_registros():
     for registro in registros:
         table.insert("", "end", values=registro)
 
-
+# Apagar o utilizador selecionado na tabela
 def apagar_utilizador():
     # Obter o ID do utilizador selecionado na tabela
     selecionado = table.focus()
@@ -66,10 +68,11 @@ def apagar_utilizador():
                 print("Erro ao apagar o utilizador:", error)
                 cursor.execute("SET FOREIGN_KEY_CHECKS=1")
                 cursor.close()
-
+        # Caso o usuário se esqueça de selecionar um registo na tabela
         else:
             messagebox.showinfo("Aviso", "Nenhum utilizador selecionado.")
 
+# Criar um novo utilizador
 def criar_utilizador():
     def salvar_utilizador():
         # Obter os valores inseridos nos campos
@@ -130,6 +133,7 @@ def criar_utilizador():
     label_perfil = ttk.Label(janela_utilizador, text="Perfil:")
     entry_perfil = ttk.Entry(janela_utilizador)
 
+    # Botão responsável por salvar o novo registo
     btn_salvar = ttk.Button(janela_utilizador, text="Salvar", command=salvar_utilizador)
 
     label_nome.pack(padx=5, pady=5)
@@ -158,6 +162,7 @@ def criar_utilizador():
 
     btn_salvar.pack(padx=5, pady=10)
 
+# Alterar o utilizador selecionado na tabela
 def alterar_utilizador():
     # Obter o utilizador selecionado na tabela
     selecionado = table.focus()
@@ -250,22 +255,26 @@ def alterar_utilizador():
         # Botão para atualizar o utilizador
         btn_atualizar = tk.Button(janela_alterar, text="Atualizar", command=atualizar_utilizador)
         btn_atualizar.grid(row=8, column=0, columnspan=2)
-
+        # Caso o usuário se esqueça de selecionar um registo na tabela
     else:
         messagebox.showwarning("Aviso", "Selecione um utilizador para atualizar.")
 
-
+# Criar uma interface gráfica para exibir registros da tabela no formato em árvore (treeview)
 def criar_interface(content_frame):
-    global table, frame
+    global table, frame# Variações globais
 
+    # Remove todos os widgets filhos existentes
     for widget in content_frame.winfo_children():
         widget.destroy()
 
+    # Cria um novo frame dentro do content_frame
     frame = ttk.Frame(content_frame, padding="10")
     frame.pack()
 
+    # Cria um objeto que exibe apenas os cabeçalhos das colunas
     table = ttk.Treeview(frame, columns=("ID", "Nome", "Email", "Contacto", "Morada", "Localidade", "Nascimento","Password", "Perfil"), show="headings")
 
+    # Define as configurações de largura para cada coluna
     table.column("ID", width=50)
     table.column("Nome", width=150)
     table.column("Email", width=150)
@@ -275,6 +284,7 @@ def criar_interface(content_frame):
     table.column("Nascimento", width=100)
     table.column("Perfil", width=100)
 
+    # Define os cabeçalhos das colunas
     table.heading("ID", text="ID")
     table.heading("Nome", text="Nome")
     table.heading("Email", text="Email")
@@ -285,18 +295,23 @@ def criar_interface(content_frame):
     table.heading("Password", text="Password")
     table.heading("Perfil", text="Perfil")
 
+    # Cria uma barra de rolagem vertical e associa-a à visualização vertical da tabela
     scroll = ttk.Scrollbar(frame, orient="vertical", command=table.yview)
     table.configure(yscroll=scroll.set)
 
+    # Cria 3 botões associados
     btn_atualizar = ttk.Button(content_frame, text="Atualizar", command=alterar_utilizador)
     btn_apagar = ttk.Button(content_frame, text="Apagar", command=apagar_utilizador)
     btn_criar = ttk.Button(content_frame, text="Criar", command=criar_utilizador)
 
+    # Empacota os botões
     btn_atualizar.pack(pady=5)
     btn_apagar.pack(pady=5)
     btn_criar.pack(pady=5)
 
+    # Empacota a tabela à esquerda e a barra de rolagem à direita
     table.pack(side="left")
     scroll.pack(side="right", fill="y")
 
+    # Exibe os registros na tabela
     buscar_registros()
