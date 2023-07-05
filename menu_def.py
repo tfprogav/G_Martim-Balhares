@@ -63,7 +63,7 @@ menu_frame.pack(side='left', fill='y')
 content_frame = Frame(main_frame, bg='white', width=1080, height=720)
 content_frame.pack(side='left', fill='both', expand=True)
 
-# Define um dicionário para o estilo dos botões
+# Define um dictionary para o estilo dos botões
 button_styles = {
     'bg': '#008080',
     'fg': 'white',

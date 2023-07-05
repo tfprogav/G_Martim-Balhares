@@ -295,7 +295,7 @@ def criar_interface(content_frame):
     table.heading("Password", text="Password")
     table.heading("Perfil", text="Perfil")
 
-    # Cria uma barra de rolagem vertical e associa-a à visualização vertical da tabela
+    # Cria uma barra de rolagem vertical e associa-a à visualização vertical da tabela.
     scroll = ttk.Scrollbar(frame, orient="vertical", command=table.yview)
     table.configure(yscroll=scroll.set)
 
