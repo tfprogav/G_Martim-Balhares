@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-import porra
 
+import main_users_def
 
 def show_gestao_utilizadores():
     clear_content_frame()
@@ -65,7 +65,7 @@ button_styles = {
     'cursor': 'hand2',
 }
 
-button1 = Button(menu_frame, text='Gestão de Utilizadores', **button_styles, command=lambda: porra.criar_interface(content_frame))
+button1 = Button(menu_frame, text='Gestão de Utilizadores', **button_styles, command=lambda: main_users_def.criar_interface(content_frame))
 button1.pack(pady=10, padx=20, fill='x')
 
 button2 = Button(menu_frame, text='Gestão de Alunos', **button_styles)
@@ -77,7 +77,7 @@ button3.pack(pady=10, padx=20, fill='x')
 button4 = Button(menu_frame, text='Gestão de Pagamentos', **button_styles)
 button4.pack(pady=10, padx=20, fill='x')
 
-button5 = Button(menu_frame, text='Gestão de Avaliações', **button_styles)
+button5 = Button(menu_frame, text='Avaliações de Alunos', **button_styles)
 button5.pack(pady=10, padx=20, fill='x')
 
 button6 = Button(menu_frame, text='Performance de Alunos', **button_styles)
